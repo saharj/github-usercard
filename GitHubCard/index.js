@@ -1,8 +1,14 @@
+const axios = require("axios").default;
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+axios.get("https://api.github.com/users/saharj").then((res) => {
+  console.log(res);
+  document.querySelector(".cards").appendChild(cardComp(res.data));
+});
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -49,6 +55,56 @@ const followersArray = [];
       </div>
     </div>
 */
+
+const cardComp = (userData) => {
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  const image = document.createElement("img");
+  image.setAttribute("src", userData["avatar_url"]);
+
+  const info = document.createElement("div");
+  info.classList.add("card-info");
+
+  const name = document.createElement("h3");
+  name.classList.add("name");
+  name.innerHTML = userData.name;
+
+  const userName = document.createElement("p");
+  userName.classList.add("username");
+  userName.innerHTML = userData.login;
+
+  const location = document.createElement("p");
+  location.innerHTML = `Location: ${userData.location}`;
+
+  const profile = document.createElement("p");
+  profile.innerHTML = "Profile: ";
+  const link = document.createElement("a");
+  link.setAttribute("href", userData["html_url"]);
+  link.innerHTML = `${userData.html_url}`;
+  profile.appendChild(link);
+
+  const followers = document.createElement("p");
+  followers.innerHTML = `Followers: ${userData.followers}`;
+
+  const following = document.createElement("p");
+  following.innerHTML = `Following: ${userData.following}`;
+
+  const bio = document.createElement("p");
+  bio.innerHTML = `Bio: ${userData.bio || "---"}`;
+
+  card.appendChild(image);
+  card.appendChild(info);
+  info.appendChild(name);
+  info.appendChild(userName);
+  info.appendChild(location);
+  info.appendChild(profile);
+  info.appendChild(followers);
+  info.appendChild(following);
+  info.appendChild(bio);
+
+  return card;
+};
 
 /*
   List of LS Instructors Github username's:
