@@ -35,6 +35,19 @@ axios.get(url + myLogin).then((res) => {
     user, and adding that card to the DOM.
 */
 
+axios.get(url + myLogin + "/followers").then((response) => {
+  response.data.forEach((person) => {
+    axios
+      .get(url + person.login)
+      .then((res) => {
+        document.querySelector(".cards").appendChild(cardComp(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+});
+
 const followersArray = [
   "aumerhadi",
   "bradzhao",
@@ -43,16 +56,16 @@ const followersArray = [
   "mrtavat",
 ];
 
-followersArray.forEach((login) => {
-  axios
-    .get(url + login)
-    .then((res) => {
-      document.querySelector(".cards").appendChild(cardComp(res.data));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+// followersArray.forEach((login) => {
+//   axios
+//     .get(url + login)
+//     .then((res) => {
+//       document.querySelector(".cards").appendChild(cardComp(res.data));
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
