@@ -4,9 +4,10 @@ const axios = require("axios").default;
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+const myLogin = "saharj";
+const url = "https://api.github.com/users/";
 
-axios.get("https://api.github.com/users/saharj").then((res) => {
-  console.log(res);
+axios.get(url + myLogin).then((res) => {
   document.querySelector(".cards").appendChild(cardComp(res.data));
 });
 
@@ -34,7 +35,24 @@ axios.get("https://api.github.com/users/saharj").then((res) => {
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  "aumerhadi",
+  "bradzhao",
+  "cuneyitkiris",
+  "rezakamalifard",
+  "mrtavat",
+];
+
+followersArray.forEach((login) => {
+  axios
+    .get(url + login)
+    .then((res) => {
+      document.querySelector(".cards").appendChild(cardComp(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
